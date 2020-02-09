@@ -66,7 +66,7 @@ public function repair(Player $sender){
 		   if(!isset($data)) return;
 		  $economy = EconomyAPI::getInstance();
           $mymoney = $economy->myMoney($sender);
-          $cash = $this->getConfig()->get("price");
+          $cash = $this->getConfig()->get("price-repair");
           $dg = $sender->getInventory()->getItemInHand()->getDamage();
           if($mymoney >= $cash * $dg){
 	      $economy->reduceMoney($sender, $cash * $dg);
@@ -93,7 +93,7 @@ public function repair(Player $sender){
 		return true;
 	 }
 	   });
-	  $mny = $this->getConfig()->get("price");
+	  $mny = $this->getConfig()->get("price-repair");
           $dg = $sender->getInventory()->getItemInHand()->getDamage();
           $pc = $mny * $dg;
           $economy = EconomyAPI::getInstance();
