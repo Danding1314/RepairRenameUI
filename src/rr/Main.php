@@ -156,7 +156,7 @@ public function setLore(Player $sender){
 	   
           $economy = EconomyAPI::getInstance();
           $mymoney = $economy->myMoney($sender);
-          $rename = $this->getConfig()->get("price-lore");
+          $lore = $this->getConfig()->get("price-lore");
 	  $f->setTitle(T::BOLD . T::YELLOW . "•Custom Lore•");
 	  $f->addLabel("§aSet lore cost: §e$lore\n§bYour money: $mymoney");
           $f->addInput(T::RED . "Rename Item:", "HardCore");
