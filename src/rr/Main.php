@@ -76,7 +76,7 @@ public function repair(Player $sender){
 	   if($item instanceof Armor or $item instanceof Tool){
 	     if($item->getDamage() > 0){
 		 $sender->getInventory()->setItem($index, $item->setDamage(0));
-                 $sender->sendMessage(T::GREEN . "Your have been repaired");
+                 $sender->sendMessage(T::GREEN . "Your item have been repaired");
 		  return true;
 		    }else{
 		 $sender->sendMessage(T::RED . "Item doesn't have any damage.");
@@ -148,6 +148,7 @@ public function setLore(Player $sender){
           if($mymoney >= $lore){
 	      $economy->reduceMoney($sender, $lore);
                 $item->setLore([$data[1]]);
+                $sender->getInventory()->setItemInHand($item);
                 $sender->sendMessage(T::GREEN . "successfully changed item lore to §r$data[1]");
                 }else{
              $sender->sendMessage(T::RED . "You don't have enough money!");
@@ -156,10 +157,10 @@ public function setLore(Player $sender){
 	   
           $economy = EconomyAPI::getInstance();
           $mymoney = $economy->myMoney($sender);
-          $rename = $this->getConfig()->get("price-lore");
+          $lore = $this->getConfig()->get("price-lore");
 	  $f->setTitle(T::BOLD . T::YELLOW . "•Custom Lore•");
 	  $f->addLabel("§aSet lore cost: §e$lore\n§bYour money: $mymoney");
-          $f->addInput(T::RED . "Rename Item:", "HardCore");
+          $f->addInput(T::RED . "SetLore:", "HardCore");
 	  $f->sendToPlayer($sender);
    }
 }
