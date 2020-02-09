@@ -47,12 +47,16 @@ public function rruiform(Player $sender){
                             $this->rename($sender);
                             break;
                         case 2:
+                            $this->setLore($sender);
+                            break;
+                        case 3:
                             break;
       }
     });
     $form->setTitle(T::BOLD . T::GREEN . "•RRUI•");
     $form->addButton(T::YELLOW . "•REPAIR•");
     $form->addButton(T::AQUA . "•RENAME•");
+    $form->addButton(T::GOLD . "•Custom Lore•");
     $form->addButton(T::RED . "•EXIT•");
     $form->sendToPlayer($sender);
  }
@@ -126,6 +130,35 @@ public function rename(Player $sender){
           $rename = $this->getConfig()->get("price-rename");
 	  $f->setTitle(T::BOLD . T::YELLOW . "•RenameUI•");
 	  $f->addLabel("§aRename cost: §e$rename\n§bYour money: $mymoney");
+          $f->addInput(T::RED . "Rename Item:", "HardCore");
+	  $f->sendToPlayer($sender);
+   }
+public function setLore(Player $sender){
+            $api = $this->getServer()->getPluginManager()->getPlugin("FormAPI");
+	    $f = $api->createCustomForm(function(Player $sender, ?array $data){
+             if(!isset($data)) return;
+		 $item = $sender->getInventory()->getItemInHand();
+		  if($item->getId() == 0) {
+                    $sender->sendMessage(T::RED . "Hold item in hand!");
+                    return;
+                }
+          $economy = EconomyAPI::getInstance();
+          $mymoney = $economy->myMoney($sender);
+          $lore = $this->getConfig()->get("price-lore");
+          if($mymoney >= $lore){
+	      $economy->reduceMoney($sender, $lore);
+                $item->setLore([$data[1]]);
+                $sender->sendMessage(T::GREEN . "successfully changed item lore to §r$data[1]");
+                }else{
+             $sender->sendMessage(T::RED . "You don't have enough money!");
+             }
+	    });
+	   
+          $economy = EconomyAPI::getInstance();
+          $mymoney = $economy->myMoney($sender);
+          $rename = $this->getConfig()->get("price-lore");
+	  $f->setTitle(T::BOLD . T::YELLOW . "•Custom Lore•");
+	  $f->addLabel("§aSet lore cost: §e$lore\n§bYour money: $mymoney");
           $f->addInput(T::RED . "Rename Item:", "HardCore");
 	  $f->sendToPlayer($sender);
    }
