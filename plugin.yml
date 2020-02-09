@@ -3,6 +3,9 @@ main: rr\Main
 version: 1.0.1
 api: 3.0.0
 author: bumbumkill
+depend:
+ - EconomyAPI
+ - FormAPI
 
 commands:
  rr:
