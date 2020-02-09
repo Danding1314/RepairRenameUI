@@ -148,6 +148,7 @@ public function setLore(Player $sender){
           if($mymoney >= $lore){
 	      $economy->reduceMoney($sender, $lore);
                 $item->setLore([$data[1]]);
+                $sender->getInventory()->setItemInHand($item);
                 $sender->sendMessage(T::GREEN . "successfully changed item lore to §r$data[1]");
                 }else{
              $sender->sendMessage(T::RED . "You don't have enough money!");
@@ -159,7 +160,7 @@ public function setLore(Player $sender){
           $lore = $this->getConfig()->get("price-lore");
 	  $f->setTitle(T::BOLD . T::YELLOW . "•Custom Lore•");
 	  $f->addLabel("§aSet lore cost: §e$lore\n§bYour money: $mymoney");
-          $f->addInput(T::RED . "Rename Item:", "HardCore");
+          $f->addInput(T::RED . "SetLore:", "HardCore");
 	  $f->sendToPlayer($sender);
    }
 }
