@@ -76,7 +76,7 @@ public function repair(Player $sender){
 	   if($item instanceof Armor or $item instanceof Tool){
 	     if($item->getDamage() > 0){
 		 $sender->getInventory()->setItem($index, $item->setDamage(0));
-                 $sender->sendMessage(T::GREEN . "Your have been repaired");
+                 $sender->sendMessage(T::GREEN . "Your item have been repaired");
 		  return true;
 		    }else{
 		 $sender->sendMessage(T::RED . "Item doesn't have any damage.");
@@ -147,7 +147,7 @@ public function setLore(Player $sender){
           $lore = $this->getConfig()->get("price-lore");
           if($mymoney >= $lore){
 	      $economy->reduceMoney($sender, $lore);
-                $item->setLore(T::colorize([$data[1]]));
+                $item->setLore([T::colorize($data[1]]));
                 $sender->getInventory()->setItemInHand($item);
                 $sender->sendMessage(T::GREEN . "successfully changed item lore to §r$data[1]");
                 }else{
