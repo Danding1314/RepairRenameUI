@@ -1,2 +1,5 @@
-price: 50
+#repair cost = price × damage
+
+price-repair: 500
 price-rename: 500
+price-lore: 500
