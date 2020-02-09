@@ -147,7 +147,7 @@ public function setLore(Player $sender){
           $lore = $this->getConfig()->get("price-lore");
           if($mymoney >= $lore){
 	      $economy->reduceMoney($sender, $lore);
-                $item->setLore([T::colorize($data[1]]));
+                $item->setLore(T::colorize[($data[1])]);
                 $sender->getInventory()->setItemInHand($item);
                 $sender->sendMessage(T::GREEN . "successfully changed item lore to §r$data[1]");
                 }else{
