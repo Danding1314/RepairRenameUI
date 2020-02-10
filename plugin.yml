@@ -1,4 +1,4 @@
-name: RepairRenameUI
+name: fixandchangenameUI
 main: rr\Main
 version: 1.0.1
 api: 3.0.0
@@ -8,5 +8,7 @@ depend:
  - FormAPI
 
 commands:
- rr:
-  description: "Open RepairRenameUI"
+ fixandchangenameui:
+  aliases: [facnui]
+  description: "§o§bEnter §7FixAndChangeNameUI"
+  permission: facnui.cmd.use
