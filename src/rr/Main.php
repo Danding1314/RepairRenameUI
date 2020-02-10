@@ -41,7 +41,7 @@ public function rruiform(Player $sender){
 			switch($data){
 		
                         case 0:
-                            $this->repair($sender);
+                            $this->menu($sender);
                             break;
                         case 1:
                             $this->rename($sender);
@@ -60,7 +60,69 @@ public function rruiform(Player $sender){
     $form->addButton(T::RED . "•EXIT•");
     $form->sendToPlayer($sender);
  }
-public function repair(Player $sender){
+public function menu(Player $sender){
+    $api = $this->getServer()->getPluginManager()->getPlugin("FormAPI");
+    $form = $api->createSimpleForm(function(Player $sender, ?int $data){
+             if(!isset($data)) return;
+			switch($data){
+		
+                        case 0:
+                            $this->xp($sender);
+                            break;
+                        case 1:
+                            $this->money($sender);
+                            break;
+                        case 2:
+                            break;
+      }
+    });
+    $form->setTitle(T::BOLD . T::GREEN . "•RRUI•");
+    $form->addButton(T::YELLOW . "•USE EXP•");
+    $form->addButton(T::AQUA . "•USE MONEY•");
+    $form->addButton(T::RED . "•EXIT•");
+    $form->sendToPlayer($sender);
+ }
+public function xp(Player $sender){
+          $api = $this->getServer()->getPluginManager()->getPlugin("FormAPI");
+		  $f = $api->createCustomForm(function(Player $sender, ?array $data){
+		      if(!isset($data)) return;
+          $xp = $this->getConfig()->get("xp-repair");
+          $pxp = $sender->getXpLevel();
+          $dg = $sender->getInventory()->getItemInHand()->getDamage();
+          if($pxp >= $xp * $dg){
+	      $sender->subtractXpLevels($xp * $dg);
+	      $index = $sender->getPlayer()->getInventory()->getHeldItemIndex();
+          $item = $sender->getInventory()->getItem($index);
+	      $id = $item->getId();
+				if($item instanceof Armor or $item instanceof Tool){
+				        if($item->getDamage() > 0){
+								$sender->getInventory()->setItem($index, $item->setDamage(0));
+					        $sender->sendMessage("§aYour have been repaired");
+					return true;
+							}else{
+								$sender->sendMessage("§cItem doesn't have any damage.");
+								return false;
+							}
+							return true;
+							}else{
+								$sender->sendMessage("§cThis item can't repaired");
+								return false;
+						}
+						return true;
+						}else{
+									$sender->sendMessage("§cYou don't have enough xp!");
+									return true;
+					}
+					});
+	  $xp = $this->getConfig()->get("xp-repair");
+          $dg = $sender->getInventory()->getItemInHand()->getDamage();
+          $pc = $xp * $dg;
+          $xps = $sender->getXpLevel();
+		  $f->setTitle("Repair your item using xp");
+		  $f->addLabel("§eYour XP: $xps \n§aXP perDamage: $xp\n§aItem damage: $dg \n§dTotal XP needed : $pc");
+		  $f->sendToPlayer($sender);
+		   }
+public function money(Player $sender){
 		  $api = $this->getServer()->getPluginManager()->getPlugin("FormAPI");
 		  $f = $api->createCustomForm(function(Player $sender, ?array $data){
 		   if(!isset($data)) return;
