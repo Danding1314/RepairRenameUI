@@ -97,7 +97,7 @@ public function xp(Player $sender){
 				if($item instanceof Armor or $item instanceof Tool){
 				        if($item->getDamage() > 0){
 								$sender->getInventory()->setItem($index, $item->setDamage(0));
-					        $sender->sendMessage("§aYour have been repaired");
+					        $sender->sendMessage("§aYour item have been repaired");
 					return true;
 							}else{
 								$sender->sendMessage("§cItem doesn't have any damage.");
