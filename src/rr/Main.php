@@ -83,6 +83,7 @@ public function menu(Player $sender){
     $form->sendToPlayer($sender);
  }
 public function xp(Player $sender){
+          //if($sender->hasPermission("r.fixxp")){
           $api = $this->getServer()->getPluginManager()->getPlugin("FormAPI");
 		  $f = $api->createCustomForm(function(Player $sender, ?array $data){
 		      if(!isset($data)) return;
@@ -112,6 +113,8 @@ public function xp(Player $sender){
 						}else{
 									$sender->sendMessage("§cYou don't have enough xp!");
 									return true;
+                                               //}else{
+                                             //$sender->sendMessage("§cYou don't have permission");
 					}
 					});
 	  $xp = $this->getConfig()->get("xp-repair");
